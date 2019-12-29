@@ -1,7 +1,3 @@
-TrackMySleepQuality - Starter Code
-==================================
-
-Starter code for Android Kotlin Fundamentals Codelab 6.1 Room
 
 Introduction
 ------------
@@ -9,29 +5,17 @@ Introduction
 TrackMySleepQuality is an app for recording sleep data for each night. 
 You can record a start and stop time, assign a quality rating, and clear the database. 
 
-In this codelab, working from this starter app,
-you will implement the Room database that holds the sleep data. 
-You will then use instrumented tests to verify that this backend works. 
-
-
-Pre-requisites
+You will learn
 --------------
 
-You need to know:
+* How to use ViewModel with Databinding to get rid of click handlers from UI
+* Using transformations to transform livedata to string object for further uses
+  e.g getting livedata object from room, applying transformations on them.
+* Handling button toggle states using livedata making use of `android: enabled` attribute
+* Using coroutines to run db tasks and using learn switching from ui thread to IO for heavy tasks
+* Learn to use viewmodelFactory that helps in giving one instance of VM for a UI lifecycle. 
+* How to use livedata for navigation triggering.
 
-* Building a basic user interface (UI) for an Android app, 
-  using an activity, fragments, and views.
-* Navigating between fragments and using Safe Args (a Gradle plugin) 
-  to pass data between fragments.
-* View models, view-model factories, and LiveData and its observers. 
-  These Architecture Components topics are covered in an earlier codelab in this course.
-* A basic understanding of SQL databases and the SQLite language.
-
-
-Getting Started
----------------
-
-1. Download and run the app.
 
 License
 -------
