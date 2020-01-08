@@ -1,4 +1,4 @@
-TrackMySleepQuality - Starter Code
+TrackMySleepQuality - Databinding with RV, @BindingAdapter
 ==================================
 
 Starter code for Android Kotlin Fundamentals Codelab 6.1 Room
