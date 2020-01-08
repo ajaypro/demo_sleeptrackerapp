@@ -14,24 +14,25 @@ you will implement the Room database that holds the sleep data.
 You will then use instrumented tests to verify that this backend works. 
 
 
-Pre-requisites
+Things to Learn
 --------------
 
-You need to know:
+Using ListAdapter: 
 
-* Building a basic user interface (UI) for an Android app, 
-  using an activity, fragments, and views.
-* Navigating between fragments and using Safe Args (a Gradle plugin) 
-  to pass data between fragments.
-* View models, view-model factories, and LiveData and its observers. 
-  These Architecture Components topics are covered in an earlier codelab in this course.
-* A basic understanding of SQL databases and the SQLite language.
-
-
-Getting Started
----------------
-
-1. Download and run the app.
+* We use list adapter which takes Data, VH as type and diffutil as constructor argument.
+    Uses diffutil which further is implemented by asyncListDiffer which runs in bg thread to provide 
+    difference in list 
+  * Also internally implements `getItem()` and `getItemCount()`, we don't need to call in adapter
+  * AsyncListDiffer a helper for computing differences between two lists with on DiffUtil and runs on bg thread
+  
+  Data binding:
+  
+ * Binding adapters are a good solution when you need to transform complex data.
+ * `binding.executePendingBindings()` This call is an optimization that asks data binding to execute any pending bindings right away. 
+    It's always a good idea to call `executePendingBindings()` when you use binding adapters in a RecyclerView, 
+	because it can slightly speed up sizing the views.
+ * [Codelab to understand databinding with RV using @bindingadapter for complex data]
+    (https://codelabs.developers.google.com/codelabs/kotlin-android-training-diffutil-databinding/#6)
 
 License
 -------
