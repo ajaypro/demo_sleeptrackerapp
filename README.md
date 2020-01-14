@@ -19,19 +19,9 @@ Pre-requisites
 
 You need to know:
 
-* Building a basic user interface (UI) for an Android app, 
-  using an activity, fragments, and views.
-* Navigating between fragments and using Safe Args (a Gradle plugin) 
-  to pass data between fragments.
-* View models, view-model factories, and LiveData and its observers. 
-  These Architecture Components topics are covered in an earlier codelab in this course.
-* A basic understanding of SQL databases and the SQLite language.
-
-
-Getting Started
----------------
-
-1. Download and run the app.
+* Databinding in RV and using a clicklistener on VH item
+* Using grid layout instead of linear layout to display images or icons with `span count` which is column or row. 
+* Using `@BindingAdapter` for for complex data with layouts
 
 License
 -------
