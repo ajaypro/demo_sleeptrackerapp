@@ -17,6 +17,7 @@
 package com.example.android.trackmysleepquality.database
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -30,6 +31,9 @@ interface SleepDatabaseDao {
 
     @Update
     fun updateNight(night: SleepNight)
+
+    @Query("SELECT * from sleep_quality WHERE id = :key")
+    fun getNightWithId(key: Long): LiveData<SleepNight>
 
     @Query("SELECT * from sleep_quality WHERE id = :key")
     fun getNight(key: Long): SleepNight?
