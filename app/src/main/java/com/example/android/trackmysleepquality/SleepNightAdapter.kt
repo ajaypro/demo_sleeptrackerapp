@@ -1,5 +1,6 @@
 package com.example.android.trackmysleepquality
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,7 +8,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.trackmysleepquality.database.SleepNight
 import com.example.android.trackmysleepquality.databinding.ListItemSleepNightBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.ClassCastException
+import kotlin.coroutines.CoroutineContext
 
 /**
  * We use list adapter which takes Data, VH as type and diffutil as constructor argument.
@@ -21,15 +27,17 @@ private const val ITEM_VIEW_TYPE_HEADER = 1
 class SleepNightAdapter(private val clickListener: SleepItemClickListener) :
         ListAdapter<DataItem, RecyclerView.ViewHolder>(SleepNightDiffCallback()) {
 
+    val adapterScope = CoroutineScope(Dispatchers.Default)
+
     override fun getItemViewType(position: Int): Int {
-        return when(getItem(position)){
+        return when (getItem(position)) {
             is DataItem.Header -> ITEM_VIEW_TYPE_HEADER
             is DataItem.SleepNightItem -> ITEM_VIEW_TYPE_ITEM
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) : RecyclerView.ViewHolder {
-        return when(viewType){
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
             ITEM_VIEW_TYPE_HEADER -> HeaderViewHolder.from(parent)
             ITEM_VIEW_TYPE_ITEM -> SleepItemViewHolder.from(parent)
             else -> throw ClassCastException("Unkown viewType $viewType")
@@ -38,7 +46,7 @@ class SleepNightAdapter(private val clickListener: SleepItemClickListener) :
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder){
+        when (holder) {
             is SleepItemViewHolder -> {
                 holder.bind((getItem(position) as DataItem.SleepNightItem).sleepNight, clickListener)
             }
@@ -48,13 +56,21 @@ class SleepNightAdapter(private val clickListener: SleepItemClickListener) :
 
     /**
      * adding items in submitList of listadapter
+     * Using Coroutine in case if the list becomes huge which is always in real-app scenario
      */
-    fun addAndSubmitList(list: List<SleepNight>?){
-        val items = when(list){
-            null -> listOf(DataItem.Header)
-            else -> listOf(DataItem.Header) + list.map { DataItem.SleepNightItem(it) }
+    fun addAndSubmitList(list: List<SleepNight>?) {
+        adapterScope.launch {
+            Log.i("addAndSubmit","Coroutine Default context" )
+            val items = when (list) {
+                null -> listOf(DataItem.Header)
+                else -> listOf(DataItem.Header) + list.map { DataItem.SleepNightItem(it) }
+            }
+            withContext(Dispatchers.Main) {
+                Log.i("submitting","Coroutine main context" )
+
+                submitList(items)
+            }
         }
-        submitList(items)
     }
 
     /**
@@ -62,8 +78,8 @@ class SleepNightAdapter(private val clickListener: SleepItemClickListener) :
      * making viewholder class private constructor so no ones calls it
      */
 
-    class HeaderViewHolder(view: View): RecyclerView.ViewHolder(view){
-        companion object{
+    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        companion object {
             fun from(parent: ViewGroup) = HeaderViewHolder(LayoutInflater.from(parent.context)
                     .inflate(R.layout.header_item_view, parent, false))
         }
