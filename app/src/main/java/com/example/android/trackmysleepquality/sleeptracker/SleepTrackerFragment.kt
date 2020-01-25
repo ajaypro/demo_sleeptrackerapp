@@ -89,7 +89,7 @@ class SleepTrackerFragment : Fragment() {
         }
 
         sleepViewModel.nights.observe(this, Observer {
-            it?.let { sleepNightAdapter.submitList(it) }
+            it?.let { sleepNightAdapter.addAndSubmitList(it) }
         })
 
         sleepViewModel.navigateToSleepQuality.observe(this, Observer {
